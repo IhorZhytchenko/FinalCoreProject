@@ -4,6 +4,24 @@ public class Item {
     private String id;
     private Snippet snippet;
     private Statistics statistics;
+    private ContentDetails contentDetails;
+    private Comment comment= new Comment();
+
+    public Comment getComment() {
+        return comment;
+    }
+
+    public void setComment(Comment comment) {
+        this.comment = comment;
+    }
+
+    public ContentDetails getContentDetails() {
+        return contentDetails;
+    }
+
+    public void setContentDetails(ContentDetails contentDetails) {
+        this.contentDetails = contentDetails;
+    }
 
     public String getId() {
         return id;

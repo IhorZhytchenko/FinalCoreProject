@@ -2,7 +2,6 @@ package Entity;
 
 public class Statistics {
     private long viewCount;
-    private long commentCount;
     private long subscriberCount;
     private long videoCount;
 
@@ -12,14 +11,6 @@ public class Statistics {
 
     public void setViewCount(long viewCount) {
         this.viewCount = viewCount;
-    }
-
-    public long getCommentCount() {
-        return commentCount;
-    }
-
-    public void setCommentCount(long commentCount) {
-        this.commentCount = commentCount;
     }
 
     public long getSubscriberCount() {

@@ -22,6 +22,7 @@ public class Main extends Application {
     static final String SETTINGS_PATH = "files/Settings.txt";
 
     private static SettingsData settingsData;
+    private static Cache cache;
 
     void windowSetup(Stage primaryStage) {
         primaryStage.setWidth(WINDOW_WIDTH);
@@ -55,6 +56,27 @@ public class Main extends Application {
         }
     }
 
+    Cache loadCache(String path) {
+        String json = null;
+        try (Scanner scanner = new Scanner(new FileInputStream(path))) {
+            scanner.useDelimiter("\\z");
+            json = scanner.next();
+        } catch (FileNotFoundException e) {
+            e.printStackTrace();
+        }
+        return  JSON.parseObject(json, Cache.class);
+    }
+
+    void saveCache(String path){
+        String json = JSON.toJSONString(cache);
+        try(FileWriter writer = new FileWriter(path)) {
+            writer.write(json);
+            writer.flush();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
     static  void drawUI(Pane root) {
 
         root.getChildren().clear();
@@ -74,6 +96,7 @@ public class Main extends Application {
         analytics.setTranslateY(220);
         analytics.setMinWidth(200);
         analytics.setOnAction((event) -> {
+            AnalyticsUI.mainUI(root);
 
         });
 
@@ -96,6 +119,14 @@ public class Main extends Application {
         return settingsData;
     }
 
+    public static Cache getCache() {
+        return cache;
+    }
+
+    public static void setCache(Cache cache) {
+        Main.cache = cache;
+    }
+
     public static void main(String[] args)  { launch(args); }
 
 
@@ -103,13 +134,18 @@ public class Main extends Application {
 
     @Override
     public void start(Stage primaryStage) throws Exception {
-        //System.out.println(channel.getItems()[0].getSnippet().getPublishedAt().getTime().toInstant().atZone(ZoneId.systemDefault()).toLocalDate().toString());
-        settingsData = loadSettings(SETTINGS_PATH);
         windowSetup(primaryStage);
         Pane root = new Pane();
         drawUI(root);
         primaryStage.setScene(new Scene(root));
         primaryStage.show();
+        settingsData = loadSettings(SETTINGS_PATH);
+         try {
+             cache = loadCache(settingsData.getPath());
+         } catch (Exception e){
+             cache = new Cache();
+         }
+
 
     }
 
@@ -117,6 +153,7 @@ public class Main extends Application {
     public void stop() throws Exception {
         super.stop();
         saveSettings(SETTINGS_PATH);
+        saveCache(settingsData.getPath());
         System.exit(0);
     }
 }
