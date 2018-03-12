@@ -3,6 +3,12 @@ public class SettingsData {
     private String path;
     private boolean spentTime;
 
+    public SettingsData(boolean cache, String path, boolean spentTime) {
+        this.cache = cache;
+        this.path = path;
+        this.spentTime = spentTime;
+    }
+
     public boolean isCache() {
         return cache;
     }

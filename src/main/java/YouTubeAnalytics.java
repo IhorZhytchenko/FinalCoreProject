@@ -3,6 +3,7 @@ import com.mashape.unirest.http.exceptions.UnirestException;
 import javafx.application.Platform;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
+import javafx.scene.control.Alert;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.cell.PropertyValueFactory;
@@ -31,7 +32,10 @@ public class YouTubeAnalytics {
                     channels.add(YouTubeChannels.channelSearch(id));
                 }
             } catch (UnirestException e) {
-                e.printStackTrace();
+                Platform.runLater(() -> {
+                    Settings.showAlert("Ошибка получения данных!!!Проверте соединение с интернетом!!!");
+                });
+
 
             }
             Platform.runLater(() -> {
@@ -53,7 +57,9 @@ public class YouTubeAnalytics {
                 }
 
             } catch (UnirestException e) {
-                e.printStackTrace();
+                Platform.runLater(() -> {
+                    Settings.showAlert("Ошибка получения данных!!!Проверте соединение с интернетом!!!");
+                });
 
             }
             Platform.runLater(() -> {
@@ -79,7 +85,9 @@ public class YouTubeAnalytics {
                 }
 
             } catch (UnirestException e) {
-                e.printStackTrace();
+                Platform.runLater(() -> {
+                    Settings.showAlert("Ошибка получения данных!!!Проверте соединение с интернетом!!!");
+                });
 
             }
             Platform.runLater(() -> {
@@ -122,10 +130,10 @@ public class YouTubeAnalytics {
         TableView<ChannelInfo> table = new TableView<ChannelInfo>();
         TableColumn titleColumn = new TableColumn("Имя канала");
         TableColumn  publishedAtColumn = new TableColumn("Дата создания канала");
-        TableColumn subscriberCountColumn = new TableColumn("Кол-во подписчиков");
-        TableColumn videoCountColumn = new TableColumn("Кол-во видео на канале");
-        TableColumn  viewCountColumn = new TableColumn("Кол-во просмотров видео");
-        TableColumn  commentCountColumn = new TableColumn("Кол-во комментариев");
+        TableColumn subscriberCountColumn = new TableColumn("Кол-во \nподписчиков");
+        TableColumn videoCountColumn = new TableColumn("Кол-во видео\n на канале");
+        TableColumn  viewCountColumn = new TableColumn("Кол-во просмотров\n видео");
+        TableColumn  commentCountColumn = new TableColumn("Кол-во\n комментариев");
         
         titleColumn.setCellValueFactory(new PropertyValueFactory<ChannelInfo, String>("title"));
         publishedAtColumn.setCellValueFactory(new PropertyValueFactory<ChannelInfo, Date>("publishedAt"));
@@ -223,4 +231,5 @@ public class YouTubeAnalytics {
         }
 
     }
+
 }

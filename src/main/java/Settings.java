@@ -129,7 +129,14 @@ public class Settings {
         button1.setTranslateY(180);
         button1.setMinWidth(250);
         button1.setOnAction((event) -> {
+
             Main.getSettingsData().setPath(textField1.getText());
+            try {
+                Main.setCache(Main.loadCache(Main.getSettingsData().getPath()));
+            } catch (Exception e){
+                Settings.showAlert("Ошибка загрузки файла с кешом!!!Кеш пустой!!!");
+                Main.setCache(new Cache());
+            }
             pathUI(root);
 
         });

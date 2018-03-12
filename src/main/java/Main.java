@@ -41,7 +41,8 @@ public class Main extends Application {
             scanner.useDelimiter("\\z");
             json = scanner.next();
         } catch (FileNotFoundException e) {
-            e.printStackTrace();
+            Settings.showAlert("Файл с настройками не найден!!!Настройки установлены по умолчанию!!!");
+            return new SettingsData(false,"files/Cache.txt",false);
         }
         return  JSON.parseObject(json, SettingsData.class);
     }
@@ -56,13 +57,14 @@ public class Main extends Application {
         }
     }
 
-    Cache loadCache(String path) {
+    static Cache loadCache(String path) {
         String json = null;
         try (Scanner scanner = new Scanner(new FileInputStream(path))) {
             scanner.useDelimiter("\\z");
             json = scanner.next();
         } catch (FileNotFoundException e) {
-            e.printStackTrace();
+            Settings.showAlert("Файл с кешом не найден!!!Кеш пустой!!!");
+            return new Cache();
         }
         return  JSON.parseObject(json, Cache.class);
     }
@@ -139,10 +141,16 @@ public class Main extends Application {
         drawUI(root);
         primaryStage.setScene(new Scene(root));
         primaryStage.show();
-        settingsData = loadSettings(SETTINGS_PATH);
+        try {
+            settingsData = loadSettings(SETTINGS_PATH);
+        } catch (Exception e){
+            Settings.showAlert("Ошибка загрузки файла с настройками!!!Настройки установлены по умолчанию!!!");
+            settingsData =  new SettingsData(false,"files/Cache.txt",false);
+        }
          try {
              cache = loadCache(settingsData.getPath());
          } catch (Exception e){
+             Settings.showAlert("Ошибка загрузки файла с кешом!!!Кеш пустой!!!");
              cache = new Cache();
          }
 
