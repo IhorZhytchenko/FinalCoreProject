@@ -69,7 +69,7 @@ public class Main extends Application {
         return  JSON.parseObject(json, Cache.class);
     }
 
-    void saveCache(String path){
+    static void saveCache(String path){
         String json = JSON.toJSONString(cache);
         try(FileWriter writer = new FileWriter(path)) {
             writer.write(json);

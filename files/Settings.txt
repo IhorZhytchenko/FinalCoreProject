@@ -1,1 +1,1 @@
-{"cache":true,"path":"files/Cache.txt","spentTime":false}
+{"cache":true,"path":"files/Cache.txt","spentTime":true}

@@ -129,6 +129,7 @@ public class Settings {
         button1.setTranslateY(180);
         button1.setMinWidth(250);
         button1.setOnAction((event) -> {
+            Main.saveCache(Main.getSettingsData().getPath());
 
             Main.getSettingsData().setPath(textField1.getText());
             try {
